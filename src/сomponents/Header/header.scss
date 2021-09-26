@@ -1,0 +1,23 @@
+.wrap{    
+    padding: 15px;
+    background-color: rgb(251, 161, 161);
+    .sub-wrap{
+     height: 60px;
+  
+     background-color: rgb(239, 241, 123);
+     .logoHeader{
+        .logoDiamonHeader{
+            margin: auto 0;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        .logoText{
+            font-style: normal;
+            font-weight: 300;
+            font-size: 48px;
+            letter-spacing: 0.015em;
+            margin: 0;
+        }
+     }
+    }
+}

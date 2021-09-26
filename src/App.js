@@ -1,9 +1,9 @@
-
+import Header from './сomponents/Header'
 
 function App() {
   return (
-    <div >
-     старт
+    <div className="clear" >
+     <Header/>
     </div>
   );
 }
