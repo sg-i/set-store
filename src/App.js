@@ -1,9 +1,10 @@
-import Header from './сomponents/Header'
-
+import Header from './сomponents/Header';
+import BunnerNewCollection from './сomponents/BunnerNewCollection';
 function App() {
   return (
-    <div className="clear" >
-     <Header/>
+    <div className="clear">
+      <Header />
+      <BunnerNewCollection />
     </div>
   );
 }
