@@ -98,12 +98,11 @@ function MalePage() {
           filters.sizeXL
         }&color=${filters.color}&priceMin=${0}&priceMax=${100000000}`,
         {
-          params:
-          {
+          params: {
             search: '',
-            age='old',
-          }
-        }
+            age: 'old',
+          },
+        },
       )
       .then((res) => {
         setMinPrice(res.data.minPrice);
