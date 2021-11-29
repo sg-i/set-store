@@ -1,0 +1,15 @@
+.titleTypeClothes{
+    border-bottom: solid 1px rgba(0, 0, 0, 0);
+    &:hover{
+        border-bottom: solid 1px rgba(41, 41, 41, 0.8);
+        cursor: pointer;
+    } 
+    margin-right: 30px;
+     width: max-content;
+}
+.titleTypeClothesActive{
+    
+    border-bottom: solid 1px rgba(41, 41, 41, 0.8);
+    cursor: pointer;
+     
+}

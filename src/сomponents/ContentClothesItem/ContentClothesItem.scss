@@ -1,0 +1,31 @@
+
+.cardClothes{
+   cursor: pointer;
+  
+ 
+   &:hover{
+       img{
+           height:359px;
+           transition: height 0.2s ease-in-out;
+       }
+   }
+   img{
+       height: 350px;
+       transition: height 0.2s ease-in-out;
+   }
+    width: 380px;
+    height: 490px;
+}
+.cartClothesText{
+    margin: 10px auto;
+    width: 65%;
+    height: 50px;
+    text-align: center;  
+}
+.cartClothesPrice{
+    margin: 10px auto;
+    width: 65%;
+   
+    text-align: center;  
+
+}

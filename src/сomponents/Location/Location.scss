@@ -1,0 +1,24 @@
+.wrapLocation{
+    text-align: center;
+    height: 100%;
+    padding: 50px;
+    padding-top: 20px;
+    .titleLocation{
+        
+        font-style: normal;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 42px;
+        margin-bottom: 30px;
+        margin-top: 0px;
+        
+    }
+    img{
+        margin-top: 15px;
+        width: 100%;
+    }
+    svg{
+        margin-right: 3px;
+        // height: 16px;
+    }
+}

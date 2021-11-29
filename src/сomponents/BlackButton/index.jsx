@@ -1,9 +1,9 @@
 import React from 'react';
 import './BlackButton.scss';
-function BlackButton() {
+function BlackButton({ title }) {
   return (
     <div className="buttonWrap">
-      <p className="test">Смотреть</p>
+      <p className="test">{title}</p>
     </div>
   );
 }

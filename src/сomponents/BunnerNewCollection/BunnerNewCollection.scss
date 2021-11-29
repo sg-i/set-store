@@ -8,5 +8,16 @@
         bottom: -370px;
         width: 500px;
         margin-left: 70px;
+        padding: 20px;
+        background-color: rgba($color: #ffffff, $alpha: 0.8);
+        border-radius: 20px;
+    }
+    @keyframes slidedown{
+        0%{transform:translate(0);}
+        50%{transform:translate(0, -10px);}
+        100%{transform:translate(0);}}
+    
+    .arrowSlideMainPage{
+        animation: slidedown 3s infinite ease-in-out;
     }
 }

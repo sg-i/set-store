@@ -1,0 +1,20 @@
+.buttonWhiteWrap{
+    
+    cursor: pointer;
+    width: min-content;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #000000;
+    background: #ffffff;
+    border: solid 2px #292929;
+    border-radius: 52px;
+    .whiteBut{
+        margin: 10px 25px 10px 25px;
+    }
+    &:hover{
+        background-color: rgb(245, 245, 245);
+        
+        transition: background-color 0.2s ease-in-out;
+    }
+}
