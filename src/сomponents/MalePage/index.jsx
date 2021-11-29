@@ -97,6 +97,13 @@ function MalePage() {
         }&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${filters.sizeL}&sizeXL=${
           filters.sizeXL
         }&color=${filters.color}&priceMin=${0}&priceMax=${100000000}`,
+        {
+          params:
+          {
+            search: '',
+            age='old',
+          }
+        }
       )
       .then((res) => {
         setMinPrice(res.data.minPrice);
@@ -113,6 +120,7 @@ function MalePage() {
     //   setClothes([]);
     // };
   }, [typeClothes]);
+
   React.useEffect(() => {
     console.log(filters);
   }, [filters]);
