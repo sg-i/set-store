@@ -4,8 +4,9 @@ import ColorsFilter from '../ColorsFilter';
 import DesignersFilter from '../DesignersFilter';
 import SortFilter from '../SortFilter';
 import './Filters.scss';
-
+import { isMobile } from 'react-device-detect';
 function Filters({
+  typeClothes,
   clothes,
   setClothes,
   minPrice,
@@ -17,7 +18,7 @@ function Filters({
   setDesigners,
   setColors,
   setFilters,
-  typeClothes,
+
   sortType,
   setSortType,
   searchText,
@@ -49,26 +50,50 @@ function Filters({
   //designers Array
   const [designersAdded, setDesignersAdded] = React.useState([]);
 
+  const [statustype, setstatustype] = React.useState(true);
+  // React.useEffect(() => {
+  //   setDesignersAdded([]);
+  //   console.log('fdg');
+  // }, [typeClothes]);
+
   React.useEffect(() => {
-    setFilters({
-      search: searchText,
-      type: typeClothes,
-      designer: designersAdded.length ? designersAdded : 'None',
-      sizeAll: sizeS || sizeM || sizeL || sizeXL ? 'No' : 'Yes',
-      sizeS: sizeS ? 'Yes' : 'No',
-      sizeM: sizeM ? 'Yes' : 'No',
-      sizeL: sizeL ? 'Yes' : 'No',
-      sizeXL: sizeXL ? 'Yes' : 'No',
-      color: colorsAdded.length ? colorsAdded : 'None',
-      priceMin: minPrice,
-      priceMax: maxPrice,
-    });
+    if (statustype) {
+      // console.log('was smth');
+      console.log(designersAdded);
+      setFilters({
+        search: searchText,
+        type: typeClothes,
+        designer: designersAdded.length ? designersAdded : 'None',
+        sizeAll: sizeS || sizeM || sizeL || sizeXL ? 'No' : 'Yes',
+        sizeS: sizeS ? 'Yes' : 'No',
+        sizeM: sizeM ? 'Yes' : 'No',
+        sizeL: sizeL ? 'Yes' : 'No',
+        sizeXL: sizeXL ? 'Yes' : 'No',
+        color: colorsAdded.length ? colorsAdded : 'None',
+        priceMin: minPrice,
+        priceMax: maxPrice,
+      });
+    }
   }, [designersAdded, colorsAdded, sizeS, sizeM, sizeL, sizeXL, maxPrice, minPrice, searchText]);
+
   React.useEffect(() => {
-    console.log('search');
-  }, [searchText]);
+    console.log(typeClothes);
+    console.log(designers);
+    setstatustype(true);
+    setColorsAdded([]);
+    setDesignersAdded([]);
+    setSizeS(false);
+    setSizeM(false);
+    setSizeL(false);
+    setSizeXL(false);
+    setDesignerOpen(false);
+    setSizeOpen(false);
+    setColorOpen(false);
+    setPriceOpen(false);
+    setSortOpen(false);
+  }, [typeClothes]);
   return (
-    <div className="filterWrap">
+    <div style={isMobile ? { width: 210 } : {}} className="filterWrap">
       <div>
         {/* строка */}
         <div
@@ -130,14 +155,35 @@ function Filters({
             className="testhr2"></div>
         </div>
 
-        <div style={designerOpen ? { marginBottom: 10 } : { display: 'none' }}>
+        <div
+          style={
+            designerOpen
+              ? { marginBottom: 10, overflow: 'auto', height: '160px' }
+              : { display: 'none' }
+          }>
+          {/* {designers.length !== 0
+            ? designers.map((el) => (
+                <DesignersFilter
+                  item={el}
+                  designersAdded={designersAdded}
+                  setDesignersAdded={setDesignersAdded}
+                />
+              ))
+            : designersAdded.map((el) => (
+                <DesignersFilter
+                  item={el}
+                  designersAdded={designersAdded}
+                  setDesignersAdded={setDesignersAdded}
+                />
+              ))} */}
           {designers.map((el) => (
             <DesignersFilter
               item={el}
+              typeClothes={typeClothes}
               designersAdded={designersAdded}
               setDesignersAdded={setDesignersAdded}
             />
-          ))}{' '}
+          ))}
         </div>
       </div>
       <div>
@@ -310,7 +356,12 @@ function Filters({
             }
             className="testhr2"></div>
         </div>
-        <div style={colorOpen ? { marginBottom: 10 } : { display: 'none' }}>
+        <div
+          style={
+            colorOpen
+              ? { marginBottom: 10, overflow: 'auto', height: '160px' }
+              : { display: 'none' }
+          }>
           {colors.map((el) => (
             <ColorsFilter item={el} colorsAdded={colorsAdded} setColorsAdded={setColorsAdded} />
           ))}{' '}

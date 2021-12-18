@@ -4,8 +4,10 @@ import TypeClothes from '../typeClothes';
 import Header from '../Header';
 import Filters from '../Filters';
 import ContentClothes from '../ContentClothes';
-
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 function MalePage() {
+  const [loadingClothes, setloadingClothes] = React.useState(false);
+  // const [state, setstate] = React.useState(initialState);
   const [test1, setTest1] = React.useState(false);
 
   const [searchText, setSearchText] = React.useState('');
@@ -35,19 +37,34 @@ function MalePage() {
     priceMax: '10000000',
   });
   const firstUpdate = React.useRef(true);
+  // React.useEffect(() => {
+  //   console.log(clothes);
+  // }, [clothes]);
   React.useEffect(() => {
-    console.log(clothes);
-  }, [clothes]);
-  React.useEffect(() => {
+    setloadingClothes(true);
     window.scrollTo(0, 0);
     // for (let i = 0; i < filters.designer.length; i++) {
     //   filters.designer[i] = filters.designer[i].replace('+', '%2B');
     // }
-
+    // console.log('was');
     axios
-      .get(
-        `/clothes?search=${filters.search}&age=old&gender=male&type=${filters.type}&des=${filters.designer}&sizeAll=${filters.sizeAll}&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${filters.sizeL}&sizeXL=${filters.sizeXL}&color=${filters.color}&priceMin=${filters.priceMin}&priceMax=${filters.priceMax}`,
-      )
+      .get(`/clothes`, {
+        params: {
+          search: filters.search,
+          age: 'old',
+          gender: 'male',
+          type: filters.type,
+          des: filters.designer,
+          sizeAll: filters.sizeAll,
+          sizeS: filters.sizeS,
+          sizeM: filters.sizeM,
+          sizeL: filters.sizeL,
+          sizeXL: filters.sizeXL,
+          color: filters.color,
+          priceMin: filters.priceMin,
+          priceMax: filters.priceMax,
+        },
+      })
       .then((res) => {
         setMinPrice(res.data.minPrice);
         setMaxPrice(res.data.maxPrice);
@@ -59,6 +76,7 @@ function MalePage() {
 
           setTest1(true);
         }
+        setloadingClothes(false);
       })
       .catch((err) => console.log(err));
     // return () => {
@@ -67,6 +85,8 @@ function MalePage() {
   }, []);
 
   React.useEffect(() => {
+    setloadingClothes(true);
+
     if (!firstUpdate.current) {
       let neArryad = [];
       if (filters.designer !== 'None') {
@@ -78,32 +98,53 @@ function MalePage() {
       }
 
       axios
-        .get(
-          `/clothes?search=${filters.search}&age=old&gender=male&type=${typeClothes}&des=${neArryad}&sizeAll=${filters.sizeAll}&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${filters.sizeL}&sizeXL=${filters.sizeXL}&color=${filters.color}&priceMin=${filters.priceMin}&priceMax=${filters.priceMax}`,
-        )
+        .get(`/clothes`, {
+          params: {
+            search: filters.search,
+            age: 'old',
+            gender: 'male',
+            type: typeClothes,
+            des: neArryad,
+            sizeAll: filters.sizeAll,
+            sizeS: filters.sizeS,
+            sizeM: filters.sizeM,
+            sizeL: filters.sizeL,
+            sizeXL: filters.sizeXL,
+            color: filters.color,
+            priceMin: filters.priceMin,
+            priceMax: filters.priceMax,
+          },
+        })
         .then((res) => {
           setClothes(res.data.clothes);
+          setloadingClothes(false);
         })
         .catch((err) => console.log(err));
     }
   }, [filters]);
-
   React.useEffect(() => {
+    setloadingClothes(true);
+
+    console.log('thirst zapros');
     firstUpdate.current = true;
     axios
-      .get(
-        `/clothes?search=&age=old&gender=male&type=${typeClothes}&des=${filters.designer}&sizeAll=${
-          filters.sizeAll
-        }&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${filters.sizeL}&sizeXL=${
-          filters.sizeXL
-        }&color=${filters.color}&priceMin=${0}&priceMax=${100000000}`,
-        {
-          params: {
-            search: '',
-            age: 'old',
-          },
+      .get(`/clothes`, {
+        params: {
+          search: '',
+          age: 'old',
+          gender: 'male',
+          type: typeClothes,
+          des: filters.designer,
+          sizeAll: filters.sizeAll,
+          sizeS: filters.sizeS,
+          sizeM: filters.sizeM,
+          sizeL: filters.sizeL,
+          sizeXL: filters.sizeXL,
+          color: filters.color,
+          priceMin: 0,
+          priceMax: 100000000,
         },
-      )
+      })
       .then((res) => {
         setMinPrice(res.data.minPrice);
         setMaxPrice(res.data.maxPrice);
@@ -112,7 +153,10 @@ function MalePage() {
         setClothes(res.data.clothes);
         if (firstUpdate.current) {
           firstUpdate.current = false;
+          console.log('ddsdf');
+          console.log(firstUpdate);
         }
+        setloadingClothes(false);
       })
       .catch((err) => console.log(err));
     // return () => {
@@ -121,9 +165,10 @@ function MalePage() {
   }, [typeClothes]);
 
   React.useEffect(() => {
-    console.log(filters);
-  }, [filters]);
-
+    console.log(clothes);
+    console.log(sortType);
+  }, [clothes]);
+  const [filtopenWrap, setfiltopenWrap] = React.useState(false);
   return (
     <div>
       {' '}
@@ -157,7 +202,13 @@ function MalePage() {
             setMaxPrice={setMaxPrice}
           />
         </div>
-        <ContentClothes sortType={sortType} clothes={clothes} />
+        <ContentClothes
+          filtopenWrap={filtopenWrap}
+          typeClothes={typeClothes}
+          loadingClothes={loadingClothes}
+          sortType={sortType}
+          clothes={clothes}
+        />
       </div>
     </div>
   );

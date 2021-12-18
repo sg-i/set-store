@@ -4,9 +4,11 @@ import './BunnerNewCollection.scss';
 import { AppContext } from '../../context';
 import { arraySection } from '../../arraysDate';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 function BunnerNewCollection() {
   // const [section, setSection] = React.useContext(AppContext);
-
+  const [nameCol, setnameCol] = React.useState('');
+  const [descCol, setdescCol] = React.useState('');
   // function clickNewCollection() {
   //   setSection(arraySection[4]);
   // }
@@ -16,7 +18,14 @@ function BunnerNewCollection() {
       behavior: 'smooth',
     });
   }
+  React.useEffect(() => {
+    axios.get('/getCollection').then((res) => {
+      console.log(res.data);
 
+      setnameCol(res.data.name);
+      setdescCol(res.data.desc);
+    });
+  }, []);
   return (
     <div>
       <div style={{ position: 'relative' }}></div>
@@ -95,7 +104,7 @@ function BunnerNewCollection() {
             Новая коллекция
           </span>
           <b style={{ fontStyle: 'normal', fontWeight: 500, fontSize: 40, marginBottom: 5 }}>
-            Lituania d'autunno
+            {nameCol}
           </b>
           <span
             style={{
@@ -106,7 +115,7 @@ function BunnerNewCollection() {
               marginBottom: 10,
               marginLeft: 2,
             }}>
-            Новинки для нее и для него
+            {descCol}
           </span>
           {/* <Link onClick={() => clickNewCollection()} to="/newcollection">
             <BlackButton title="Смотреть" />

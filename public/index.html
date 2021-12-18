@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/diamond.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <meta name="viewport" content="width=device-width" />
+
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -17,10 +19,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <title>Set Store</title>
+    
   </head>
-  <body>
+  <body id="elem" >
     <noscript>You need to enable JavaScript to run this app.</noscript>
+   
     <div id="root"></div>
+    <!-- <script>
+      const availableScreenWidth = window.innerWidth;
+      // const availableScreenWidth = window.screen.availWidth;
+      // const availableScreenHeight = window.screen.availHeight;
+      // let testWid=document.getElementsByTagName('body');
+      // testWid.style.height='300px';
+      document.body.style.width=`${availableScreenWidth}px`;
+    </script> -->
    
   </body>
+  
 </html>

@@ -4,7 +4,7 @@ import './ContentClothes.scss';
 import ContentClothesItem from '../ContentClothesItem';
 import { AppContext } from '../../context';
 import ContentLoader from 'react-content-loader';
-function ContentClothes({ clothes, sortType }) {
+function ContentClothes({ filtopenWrap, typeClothes, loadingClothes, clothes, sortType }) {
   //   clothes.length===0 ?  return (<ContentLoader
   //   speed={2}
   //   width={280}
@@ -20,7 +20,7 @@ function ContentClothes({ clothes, sortType }) {
   let testarr = ['', '', '', '', '', '', '', '', '', '', '', '', ''];
   return (
     <div className="wrapContentClothes d-flex">
-      {clothes.length === 0 &&
+      {loadingClothes &&
         testarr.map((sd) => (
           <ContentLoader
             speed={2}
@@ -35,23 +35,24 @@ function ContentClothes({ clothes, sortType }) {
             <rect x="97" y="21" rx="33" ry="33" width="219" height="295" />
           </ContentLoader>
         ))}
+      {/* {loadingClothes === false && clothes.length == 0 && <div>Товаров не найдено</div>} */}
       {sortType === 'По популярности' &&
         clothes
           .sort((prev, next) => next.views - prev.views)
           .map((el) => {
-            return <ContentClothesItem el={el} />;
+            return <ContentClothesItem filtopenWrap={filtopenWrap} el={el} />;
           })}
       {sortType === 'По возрастанию цены' &&
         clothes
           .sort((prev, next) => prev.price - next.price)
           .map((el) => {
-            return <ContentClothesItem el={el} />;
+            return <ContentClothesItem filtopenWrap={filtopenWrap} el={el} />;
           })}
       {sortType === 'По убыванию цены' &&
         clothes
           .sort((prev, next) => next.price - prev.price)
           .map((el) => {
-            return <ContentClothesItem el={el} />;
+            return <ContentClothesItem filtopenWrap={filtopenWrap} el={el} />;
           })}
     </div>
   );

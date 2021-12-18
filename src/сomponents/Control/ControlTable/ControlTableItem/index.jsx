@@ -163,6 +163,22 @@ const ControlTableItem = ({ updateClothesItems, el, clothes, loadingClothes }) =
         setDesignerTableStateChange(false);
       });
   }
+  function postDeleteItem() {
+    let addQueestionDelete = window.confirm('Вы уверены, что хотите удалить товар?');
+    console.log(el.imageUrl.slice(el.imageUrl.lastIndexOf('/') + 1, el.imageUrl.lastIndexOf('.')));
+    if (addQueestionDelete) {
+      axios
+        .post('/deleteItem', {
+          _id: el._id,
+          url: el.imageUrl.slice(el.imageUrl.lastIndexOf('/') + 1, el.imageUrl.lastIndexOf('.')),
+        })
+        .then(() => {
+          console.log('удален');
+          console.log(el);
+          updateClothesItems();
+        });
+    }
+  }
 
   // React.useEffect(() => {
   //   console.log('change');
@@ -352,7 +368,7 @@ const ControlTableItem = ({ updateClothesItems, el, clothes, loadingClothes }) =
               />
             </svg>
           </div>
-          <div className="cu-p deleteItemControl">
+          <div onClick={postDeleteItem} className="cu-p deleteItemControl">
             <svg
               width="22"
               height="22"

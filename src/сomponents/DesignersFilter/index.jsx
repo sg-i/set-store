@@ -3,9 +3,11 @@ import React from 'react';
 import './DesignersFilter.scss';
 import { AppContext } from '../../context';
 
-function DesignersFilter({ designersAdded, setDesignersAdded, item }) {
+function DesignersFilter({ typeClothes, designersAdded, setDesignersAdded, item }) {
   const [designerItemOpen, setDesignerItemOpen] = React.useState(false);
-
+  React.useEffect(() => {
+    setDesignerItemOpen(false);
+  }, [typeClothes]);
   return (
     <div>
       <div

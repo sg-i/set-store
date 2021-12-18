@@ -18,7 +18,25 @@ import LoginSuccessPage from './сomponents/Control/LoginSuccessPage';
 import LoginFailurePage from './сomponents/Control/LoginFailurePage';
 import ControlPage from './сomponents/Control';
 import KidsPage from './сomponents/KidsPage';
+import CollectionPage from './сomponents/CollectionPage';
+import { isMobile } from 'react-device-detect';
 function App() {
+  const [isMobileState, setIsMobileState] = React.useState(false);
+  React.useEffect(() => {
+    setIsMobileState(isMobile);
+  }, []);
+  if (isMobileState) {
+    // document.body.style.width = `${window.screen.availWidth}px`;
+    document.body.style.width = `${750}px`;
+  }
+  React.useEffect(() => {
+    console.log(isMobileState);
+    console.log(window.screen.availWidth);
+    // if (isMobileState) {
+    //   // document.body.style.width = `${window.screen.availWidth}px`;
+    //   document.body.style.width = `${750}px`;
+    // }
+  }, [isMobileState]);
   return (
     <div className="clear">
       <AppContext.Provider>
@@ -40,7 +58,7 @@ function App() {
             <KidsPage />
           </Route>
           <Route path="/newcollection">
-            <Header />
+            <CollectionPage />
           </Route>
           <Route path="/location">
             <Header />

@@ -7,9 +7,11 @@ import ContentClothes from '../ContentClothes';
 import { useParams } from 'react-router';
 import '../Filters/Filters.scss';
 function KidsPage() {
+  const [loadingClothes, setloadingClothes] = React.useState(false);
+
   const [test1, setTest1] = React.useState(false);
   const [genderOpen, setGenderOpen] = React.useState(false);
-  const [gender, setGender] = React.useState('male');
+  const [gender, setGender] = React.useState('all');
   const [searchText, setSearchText] = React.useState('');
 
   //Price Types
@@ -40,6 +42,8 @@ function KidsPage() {
 
   console.log(testPar);
   React.useEffect(() => {
+    setloadingClothes(true);
+
     window.scrollTo(0, 0);
     console.log('first zapros');
     // for (let i = 0; i < filters.designer.length; i++) {
@@ -47,9 +51,23 @@ function KidsPage() {
     // }
 
     axios
-      .get(
-        `/clothes?search=${filters.search}&gender=${gender}&age=kids&type=${filters.type}&des=${filters.designer}&sizeAll=${filters.sizeAll}&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${filters.sizeL}&sizeXL=${filters.sizeXL}&color=${filters.color}&priceMin=${filters.priceMin}&priceMax=${filters.priceMax}`,
-      )
+      .get(`/clothes`, {
+        params: {
+          search: filters.search,
+          age: 'kids',
+          gender: gender,
+          type: filters.type,
+          des: filters.designer,
+          sizeAll: filters.sizeAll,
+          sizeS: filters.sizeS,
+          sizeM: filters.sizeM,
+          sizeL: filters.sizeL,
+          sizeXL: filters.sizeXL,
+          color: filters.color,
+          priceMin: filters.priceMin,
+          priceMax: filters.priceMax,
+        },
+      })
       .then((res) => {
         setMinPrice(res.data.minPrice);
         setMaxPrice(res.data.maxPrice);
@@ -62,6 +80,7 @@ function KidsPage() {
           console.log(firstUpdate);
           setTest1(true);
         }
+        setloadingClothes(false);
       })
       .catch((err) => console.log(err));
     // return () => {
@@ -70,43 +89,74 @@ function KidsPage() {
   }, []);
 
   React.useEffect(() => {
+    setloadingClothes(true);
+
     console.log(firstUpdate);
     if (!firstUpdate.current) {
       console.log('фильтр ченж ');
       console.log(filters);
-      let neArryad = [];
-      if (filters.designer !== 'None') {
-        for (let i = 0; i < filters.designer.length; i++) {
-          neArryad.push(filters.designer[i].replace('+', '%2B'));
-        }
-      } else {
-        neArryad = 'None';
-      }
-      console.log(neArryad);
+      // let neArryad = [];
+      // if (filters.designer !== 'None') {
+      //   for (let i = 0; i < filters.designer.length; i++) {
+      //     // neArryad.push(filters.designer[i].replace('+', '%2B'));
+      //     neArryad.push(filters.designer[i].replace('+', '%2B'));
+
+      //   }
+      // } else {
+      //   neArryad = 'None';
+      // }
+      // console.log(neArryad);
       axios
-        .get(
-          `/clothes?search=${filters.search}&gender=${gender}&age=kids&type=${typeClothes}&des=${neArryad}&sizeAll=${filters.sizeAll}&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${filters.sizeL}&sizeXL=${filters.sizeXL}&color=${filters.color}&priceMin=${filters.priceMin}&priceMax=${filters.priceMax}`,
-        )
+        .get(`/clothes`, {
+          params: {
+            search: filters.search,
+            age: 'kids',
+            gender: gender,
+            type: typeClothes,
+            des: filters.designer,
+            sizeAll: filters.sizeAll,
+            sizeS: filters.sizeS,
+            sizeM: filters.sizeM,
+            sizeL: filters.sizeL,
+            sizeXL: filters.sizeXL,
+            color: filters.color,
+            priceMin: filters.priceMin,
+            priceMax: filters.priceMax,
+          },
+        })
         .then((res) => {
           console.log(res.data.clothes);
 
           setClothes(res.data.clothes);
+          setloadingClothes(false);
         })
         .catch((err) => console.log(err));
     }
   }, [filters, gender]);
 
   React.useEffect(() => {
+    setloadingClothes(true);
+
     console.log('thirst zapros');
     firstUpdate.current = true;
     axios
-      .get(
-        `/clothes?search=&gender=${gender}&age=kids&type=${typeClothes}&des=${
-          filters.designer
-        }&sizeAll=${filters.sizeAll}&sizeS=${filters.sizeS}&sizeM=${filters.sizeM}&sizeL=${
-          filters.sizeL
-        }&sizeXL=${filters.sizeXL}&color=${filters.color}&priceMin=${0}&priceMax=${100000000}`,
-      )
+      .get(`/clothes`, {
+        params: {
+          search: '',
+          age: 'kids',
+          gender: gender,
+          type: typeClothes,
+          des: filters.designer,
+          sizeAll: filters.sizeAll,
+          sizeS: filters.sizeS,
+          sizeM: filters.sizeM,
+          sizeL: filters.sizeL,
+          sizeXL: filters.sizeXL,
+          color: filters.color,
+          priceMin: 0,
+          priceMax: 100000000,
+        },
+      })
       .then((res) => {
         setMinPrice(res.data.minPrice);
         setMaxPrice(res.data.maxPrice);
@@ -118,13 +168,14 @@ function KidsPage() {
           console.log('ddsdf');
           console.log(firstUpdate);
         }
+        setloadingClothes(false);
       })
       .catch((err) => console.log(err));
     // return () => {
     //   setClothes([]);
     // };
   }, [typeClothes, gender]);
-
+  const [filtopenWrap, setfiltopenWrap] = React.useState(false);
   return (
     <div>
       {' '}
@@ -218,7 +269,7 @@ function KidsPage() {
             </div>
             {/*sort */}
             <div style={genderOpen ? {} : { display: 'none' }}>
-              {['male', 'female'].map((el) => (
+              {['all', 'male', 'female'].map((el) => (
                 <div
                   style={{ margin: '15px', marginBottom: -5, marginLeft: 10 }}
                   className="d-flex align-center">
@@ -231,13 +282,18 @@ function KidsPage() {
                       style={gender === el ? {} : { display: 'none' }}
                       className="squaredTwo"></div>
                   </div>
-                  <div>{el === 'male' ? 'Мальчик' : 'Девочка'}</div>
+                  <div>{el === 'all' ? 'Любой' : el === 'male' ? 'Мальчик' : 'Девочка'}</div>
                 </div>
               ))}{' '}
             </div>
           </div>
         </div>
-        <ContentClothes sortType={sortType} clothes={clothes} />
+        <ContentClothes
+          filtopenWrap={filtopenWrap}
+          loadingClothes={loadingClothes}
+          sortType={sortType}
+          clothes={clothes}
+        />
       </div>
     </div>
   );

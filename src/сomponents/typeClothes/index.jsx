@@ -17,7 +17,7 @@ function TypeClothes({ search, searchText, typeClothes, setTypeClothes, setSearc
   }
   function searchDiv() {
     return (
-      <div style={{ width: '25%' }}>
+      <div style={{ marginRight: 30 }}>
         <div
           className="d-flex"
           style={{
